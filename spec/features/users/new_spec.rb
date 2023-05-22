@@ -41,5 +41,16 @@ RSpec.describe 'user registration page', type: :feature do
 
       expect(page).to have_link(User.last.email)
     end
+
+    it 'when password and password confirmation do not match, I am taken back to the register page with an error' do
+      fill_in 'User name', with: 'Test User'
+      fill_in 'Email', with: 'new_email@hotmail.edu'
+      fill_in 'Password', with: 'secret123'
+      fill_in 'Password confirmation', with: 'secret12345'
+      click_button 'Create New User'
+
+      expect(current_path).to eq('/register')
+      expect(page).to have_content("Password confirmation doesn't match Password")
+    end
   end
 end
