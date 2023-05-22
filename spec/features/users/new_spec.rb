@@ -10,6 +10,8 @@ RSpec.describe 'user registration page', type: :feature do
       expect(page).to have_content('Register a New User')
       expect(page).to have_field('User name')
       expect(page).to have_field('Email')
+      expect(page).to have_field('Password')
+      expect(page).to have_field('Password confirmation')
       expect(page).to have_button('Create New User')
     end
 
@@ -18,6 +20,8 @@ RSpec.describe 'user registration page', type: :feature do
 
       fill_in 'User name', with: 'Test User'
       fill_in 'Email', with: 'already_here@hotmail.edu'
+      fill_in 'Password', with: 'blah'
+      fill_in 'Password confirmation', with: 'blah'
       click_button 'Create New User'
 
       expect(page).to have_content('Email has already been taken')
@@ -27,6 +31,8 @@ RSpec.describe 'user registration page', type: :feature do
 
       fill_in 'User name', with: 'Test User'
       fill_in 'Email', with: 'new_email@hotmail.edu'
+      fill_in 'Password', with: 'secret123'
+      fill_in 'Password confirmation', with: 'secret123'
       click_button 'Create New User'
 
       expect(current_path).to eq(user_path(User.last))
