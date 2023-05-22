@@ -8,14 +8,24 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-
     if user.save
       redirect_to user_path(user)
     else
-      flash[:alert] = 'Email has already been taken'
-
+      if user_params[:password] != user_params[:password_confirmation]
+        flash[:alert] = "Password confirmation doesn't match Password"
+      else
+        flash[:alert] = 'Email has already been taken'
+      end
       redirect_to '/register'
     end
+
+    # begin
+    #   user = User.create!(user_params)
+    #   redirect_to user_path(user)
+    # rescue ActiveRecord::RecordInvalid => error
+    #   flash[:alert] = error.full_message
+    #   redirect_to '/register'
+    # end
   end
 
   private
