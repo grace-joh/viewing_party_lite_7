@@ -2,6 +2,8 @@
   <%= link_to "Create User", register_path, method: :get, local: true %>
 </div>
 
+<%= link_to "I already have an account", login_path %>
+
 <div id="existing-users">
   <h2>Existing Users</h2>
   <% @users.each do |user| %>
