@@ -11,11 +11,7 @@ class UsersController < ApplicationController
     if user.save
       redirect_to user_path(user)
     else
-      if user_params[:password] != user_params[:password_confirmation]
-        flash[:alert] = "Password confirmation doesn't match Password"
-      else
-        flash[:alert] = 'Email has already been taken'
-      end
+      flash[:alert] = user.errors.full_messages
       redirect_to '/register'
     end
 
