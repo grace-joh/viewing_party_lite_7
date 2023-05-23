@@ -18,6 +18,12 @@ RSpec.describe 'Logging In' do
     expect(current_path).to eq(user_path(user))
 
     expect(page).to have_content("#{user.user_name}'s Dashboard")
+
+    visit root_path
+
+    expect(page).to have_link('Log Out')
+    expect(page).to_not have_link('Create User')
+    expect(page).to_not have_link('I already have an account')
   end
 
   it 'cannot log in with bad credentials' do
@@ -33,5 +39,11 @@ RSpec.describe 'Logging In' do
     expect(current_path).to eq(login_path)
 
     expect(page).to have_content('Sorry, your credentials are bad.')
+
+    visit root_path
+
+    expect(page).to_not have_link('Log Out')
+    expect(page).to have_link('Create User')
+    expect(page).to have_link('I already have an account')
   end
 end
