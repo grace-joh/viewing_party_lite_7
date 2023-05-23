@@ -1,8 +1,11 @@
-<div id="new-user">
-  <%= link_to "Create User", register_path, method: :get, local: true %>
-</div>
-
-<%= link_to "I already have an account", login_path %>
+<% if current_user %>
+  <%= link_to "Log Out", logout_path %>
+<% else %>
+  <div id="new-user">
+    <%= link_to "Create User", register_path, method: :get, local: true %>
+  </div>
+  <%= link_to "I already have an account", login_path %>
+<% end %>
 
 <div id="existing-users">
   <h2>Existing Users</h2>

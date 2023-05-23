@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
+      session[:user_id] = user.id
       redirect_to user_path(user)
     else
       flash[:alert] = user.errors.full_messages
@@ -23,19 +24,6 @@ class UsersController < ApplicationController
     #   flash[:alert] = error.full_message
     #   redirect_to '/register'
     # end
-  end
-
-  def login_form
-  end
-
-  def login
-    user = User.find_by(email: user_params[:email])
-    if user.authenticate(user_params[:password])
-      redirect_to user_path(user)
-    else
-      flash[:error] = "Sorry, your credentials are bad."
-      render :login_form
-    end
   end
 
   private

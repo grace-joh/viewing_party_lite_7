@@ -14,7 +14,7 @@ RSpec.describe 'landing page', type: :feature do
       expect(page).to have_content('Viewing Party')
     end
 
-    it 'when I visit the root path I should see a button to create a new user' do
+    it 'when I visit the root path I should see the links Create User and I already have an account' do
       within('#new-user') do
         expect(page).to have_link('Create User')
 
@@ -22,6 +22,7 @@ RSpec.describe 'landing page', type: :feature do
 
         expect(current_path).to eq(register_path)
       end
+      expect(page).to have_link('I already have an account')
     end
 
     it 'when I visit the root path I should see a list of existing users which links to the users dashboard' do
