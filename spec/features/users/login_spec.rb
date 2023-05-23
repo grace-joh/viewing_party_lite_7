@@ -6,7 +6,7 @@ RSpec.describe 'Log in Sessions' do
 
     visit root_path
 
-    click_on 'I already have an account'
+    click_on 'Log In'
 
     expect(current_path).to eq(login_path)
 
@@ -23,7 +23,7 @@ RSpec.describe 'Log in Sessions' do
 
     expect(page).to have_link('Log Out')
     expect(page).to_not have_link('Create User')
-    expect(page).to_not have_link('I already have an account')
+    expect(page).to_not have_link('Log In')
   end
 
   it 'cannot log in with bad credentials' do
@@ -44,7 +44,7 @@ RSpec.describe 'Log in Sessions' do
 
     expect(page).to_not have_link('Log Out')
     expect(page).to have_link('Create User')
-    expect(page).to have_link('I already have an account')
+    expect(page).to have_link('Log In')
   end
 
   it 'can log out a user' do
@@ -63,6 +63,6 @@ RSpec.describe 'Log in Sessions' do
     expect(current_path).to eq(root_path)
     expect(page).to_not have_link('Log Out')
     expect(page).to have_link('Create User')
-    expect(page).to have_link('I already have an account')
+    expect(page).to have_link('Log In')
   end
 end
