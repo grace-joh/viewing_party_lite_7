@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    unless current_user
+      redirect_to root_path
+      flash[:alert] = 'You must be logged in or registered to access your dashboard'
+    end
   end
 
   def new
