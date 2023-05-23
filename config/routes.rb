@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'landing#index'
-  
+
   get '/dashboard', to: 'users#show'
   get '/register', to: 'users#new'
   post '/register', to: 'users#create'
@@ -13,8 +13,8 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#login"
   get '/logout', to: 'sessions#logout'
 
-  resources :discover, only: [:index], controller: 'users/discover'
-  resources :movies, only: [:index, :show], controller: 'users/movies' do
-    resources :viewing_parties, only: [:new, :create], controller: 'users/movies/viewing_parties'
+  resources :discover, only: [:index]
+  resources :movies, only: [:index, :show] do
+    resources :viewing_parties, only: [:new, :create], controller: 'movies/viewing_parties'
   end
 end
