@@ -1,5 +1,5 @@
 <% if current_user %>
-  <%= link_to "Log Out" %>
+  <%= link_to "Log Out", logout_path %>
 <% else %>
   <div id="new-user">
     <%= link_to "Create User", register_path, method: :get, local: true %>
