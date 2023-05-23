@@ -1,13 +1,14 @@
-<h3 align="center"><%= @user.user_name %>'s Dashboard</h3>
+<h3 align="center"><%= current_user.user_name %>'s Dashboard</h3>
 <div align="center">
-<%= button_to "Discover Movies", user_discover_index_path(@user), method: 'get' %>
+<%= button_to "Discover Movies", user_discover_index_path(current_user), method: 'get' %>
 </div>
 <br>
+
 <section class='viewing-parties' style="display:flex;justify-content:space-evenly">
-  <%= "click 'Discover Movies' and start a party!" if @user.parties.empty? %>
-  <% @user.parties.each do |party| %>
+  <%= "click 'Discover Movies' and start a party!" if current_user.parties.empty? %>
+  <% current_user.parties.each do |party| %>
     <div id='party-<%= party.id %>' style="border: 1px solid black;text-align:center;width:350px" >
-      <%= render partial: 'party', locals: { party: party, user: @user} %>
+      <%= render partial: 'party', locals: { party: party, user: current_user} %>
     </div>
   <% end %>
 </section>
