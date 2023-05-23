@@ -15,7 +15,7 @@ RSpec.describe 'Log in Sessions' do
 
     click_on 'Log In'
 
-    expect(current_path).to eq(user_path(user))
+    expect(current_path).to eq(dashboard_path)
 
     expect(page).to have_content("#{user.user_name}'s Dashboard")
 

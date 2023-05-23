@@ -1,4 +1,4 @@
-<%= button_to "Discover Page", user_discover_index_path(@user), method: 'get' %>
+<%= button_to "Discover Page", discover_index_path, method: 'get' %>
 
 <% if params[:q] == "top rated" %>
   <%= render partial: "movie_list" %>

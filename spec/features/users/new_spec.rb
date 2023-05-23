@@ -27,7 +27,7 @@ RSpec.describe 'user registration page', type: :feature do
       expect(page).to have_content('Email has already been taken')
     end
 
-    it 'when I fill out the email with a new one I be redirected to the user show page for that user' do
+    it 'when I fill out the email with a new one I be redirected to the user dashboard for that user' do
 
       fill_in 'User name', with: 'Test User'
       fill_in 'Email', with: 'new_email@hotmail.edu'
@@ -35,11 +35,11 @@ RSpec.describe 'user registration page', type: :feature do
       fill_in 'Password confirmation', with: 'secret123'
       click_button 'Create New User'
 
-      expect(current_path).to eq(user_path(User.last))
+      expect(current_path).to eq(dashboard_path)
 
       visit '/'
 
-      expect(page).to have_link(User.last.email)
+      expect(page).to have_content(User.last.email)
     end
 
     it 'when password and password confirmation do not match, I am taken back to the register page with an error' do
