@@ -1,17 +1,17 @@
 <% if current_user %>
   <%= link_to "Log Out", logout_path %>
+
+  <div id="existing-users">
+    <h2>Existing Users</h2>
+    <% @users.each do |user| %>
+      <ul>
+        <li><%= user.email %></li>
+      </ul>
+    <% end %>
+  </div>
 <% else %>
   <div id="new-user">
     <%= link_to "Create User", register_path, method: :get, local: true %>
   </div>
-  <%= link_to "I already have an account", login_path %>
+  <%= link_to "Log In", login_path %>
 <% end %>
-
-<div id="existing-users">
-  <h2>Existing Users</h2>
-  <% @users.each do |user| %>
-    <ul>
-      <li><%= link_to user.email, user_path(user) %></li>
-    </ul>
-  <% end %>
-</div>
