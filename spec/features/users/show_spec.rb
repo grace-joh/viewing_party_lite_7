@@ -3,9 +3,7 @@ require 'rails_helper'
 RSpec.describe 'users dashboard show page', type: :feature do
   describe 'As a visitor' do
     it 'redirects me to the landing page' do
-      user1 = create(:user)
-
-      visit user_path(user1)
+      visit dashboard_path
 
       expect(current_path).to eq(root_path)
       expect(page).to have_content('You must be logged in or registered to access your dashboard')
@@ -34,20 +32,20 @@ RSpec.describe 'users dashboard show page', type: :feature do
       @partygoer6 = create(:partygoer, user: @user4, party: @party2)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
-      visit user_path(@user1)
+      visit dashboard_path
     end
 
-    it 'displays the user dashboard header', :vcr do
+    it 'displays the dashboard header', :vcr do
       expect(page).to have_content("#{@user1.user_name}'s Dashboard")
       expect(page).to_not have_content("#{@user2.user_name}'s Dashboard")
     end
 
-    it 'has a button linking to the user discover page', :vcr do
+    it 'has a button linking to the discover page', :vcr do
       expect(page).to have_button('Discover Movies')
 
       click_button('Discover Movies')
 
-      expect(current_path).to eq(user_discover_index_path(@user1))
+      expect(current_path).to eq(discover_index_path)
     end
 
     describe 'viewing party list' do
@@ -99,7 +97,7 @@ RSpec.describe 'users dashboard show page', type: :feature do
 
         it 'displays message when no parties exist', :vcr do
           allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user5)
-          visit user_path(@user5)
+          visit dashboard_path
 
           within('.viewing-parties') do
             expect(page).to have_content("click 'Discover Movies' and start a party!")

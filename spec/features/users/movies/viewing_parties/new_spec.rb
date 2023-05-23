@@ -10,7 +10,9 @@ RSpec.describe 'New Viewing Party Page', type: :feature do
 
     @movie = MovieFacade.new(550).find_movie
 
-    visit new_user_movie_viewing_party_path(@user1, @movie.id)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user1)
+
+    visit new_movie_viewing_party_path(@movie.id)
   end
 
   describe 'new viewing party form', :vcr do
@@ -23,7 +25,7 @@ RSpec.describe 'New Viewing Party Page', type: :feature do
 
       click_button 'Discover Page'
 
-      expect(current_path).to eq(user_discover_index_path(@user1))
+      expect(current_path).to eq(discover_index_path)
     end
 
     it 'displays a form to create a new viewing party' do
@@ -55,7 +57,7 @@ RSpec.describe 'New Viewing Party Page', type: :feature do
       check @user2.user_name
       click_button 'Create Party'
 
-      expect(current_path).to eq(user_path(@user1))
+      expect(current_path).to eq(dashboard_path)
       expect(page).to have_content('Your party has been created!')
       expect(page).to have_content(@movie.title)
       expect(page).to have_content('November 11, 2023')
@@ -63,7 +65,9 @@ RSpec.describe 'New Viewing Party Page', type: :feature do
       expect(page).to have_content(@user1.user_name)
       expect(page).to have_content(@user2.user_name)
 
-      visit user_path(@user2)
+      # visit user2's dashboard to view the invited party
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user2)
+      visit dashboard_path
 
       expect(page).to have_content(@movie.title)
       expect(page).to have_content('November 11, 2023')
@@ -76,7 +80,7 @@ RSpec.describe 'New Viewing Party Page', type: :feature do
       check @user2.user_name
       click_button 'Create Party'
 
-      expect(current_path).to eq(new_user_movie_viewing_party_path(@user1, @movie.id))
+      expect(current_path).to eq(new_movie_viewing_party_path(@movie.id))
       expect(page).to have_content('Please fill in all fields.')
     end
   end

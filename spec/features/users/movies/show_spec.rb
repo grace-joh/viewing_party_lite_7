@@ -7,7 +7,7 @@ RSpec.describe 'Users Movies Details Page', type: :feature do
       @user = create(:user)
 
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
-      visit user_movie_path(@user, @movie.id)
+      visit movie_path(@movie.id)
     end
 
     it 'displays the movie title, vote average, runtime, genre, and summary', :vcr do
@@ -26,7 +26,7 @@ RSpec.describe 'Users Movies Details Page', type: :feature do
 
       click_button 'Discover Page'
 
-      expect(current_path).to eq(user_discover_index_path(@user))
+      expect(current_path).to eq(discover_index_path)
     end
 
     it 'should display a button to create a viewing party for the movie', :vcr do
@@ -34,7 +34,7 @@ RSpec.describe 'Users Movies Details Page', type: :feature do
 
       click_button "Create Viewing Party for #{@movie.title}"
 
-      expect(current_path).to eq(new_user_movie_viewing_party_path(@user, @movie.id))
+      expect(current_path).to eq(new_movie_viewing_party_path(@movie.id))
     end
 
     it 'lists 10 casts members for the movie', :vcr do
@@ -69,12 +69,11 @@ RSpec.describe 'Users Movies Details Page', type: :feature do
   describe 'As a visitor' do
     it 'redirects to this page if a visitor clicks to create a party', :vcr do
       movie = MovieFacade.new(550).find_movie
-      user = create(:user)
 
-      visit user_movie_path(user, movie.id)
+      visit movie_path(movie.id)
       click_on 'Create Viewing Party for Fight Club'
 
-      expect(current_path).to eq(user_movie_path(user, movie.id))
+      expect(current_path).to eq(movie_path(movie.id))
       expect(page).to have_content('You must be logged in or registered to create a viewing party')
     end
   end

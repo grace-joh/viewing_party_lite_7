@@ -1,10 +1,10 @@
 class Users::MoviesController < ApplicationController
-  before_action :find_user, only: [:index, :show]
+  # before_action :find_user, only: [:index, :show]
 
   def index
     if params[:q].empty?
       flash[:alert] = 'Please enter a movie'
-      redirect_to user_discover_index_path(params[:user_id])
+      redirect_to discover_index_path
     else
       @movies = MovieListFacade.new(params[:q]).get_movies
     end
@@ -14,9 +14,9 @@ class Users::MoviesController < ApplicationController
     @facade = MovieFacade.new(params[:id])
   end
 
-  private
+  # private
 
-  def find_user
-    @user = User.find(params[:user_id])
-  end
+  # def find_user
+  #   @user = User.find(params[:user_id])
+  # end
 end
